@@ -33,61 +33,28 @@ let loaded_fuzzyjump = 1
 
 
 
-" Functions  "{{{1
-" Utilities  "{{{2
+" Variables  "{{{1
 
-function! s:GetPos()
-  let pos = getpos('.')
-  return {'line':pos[1], 'col':pos[2], 'bufnum':pos[0], 'off':pos[3]}
-endfunction
+if !exists('g:FuzzyJump_AutoStart')
+  let g:FuzzyJump_AutoStart = 1
+endif
 
-function! s:SetPos(pos)
-  call setpos('.', [a:pos.bufnum, a:pos.line, a:pos.col, a:pos.off])
-endfunction
+if !exists('g:FuzzyJump_AbsoluteJumpPrefix')
+  let g:FuzzyJump_AbsoluteJumpPrefix = ';'
+endif
 
-function! s:SavePos()
-  let s:save_pos_cursor = s:GetPos()
-  return s:save_pos_cursor
-endfunction
+"if !exists('g:FuzzyJump_RelativeJumpPrefix')
+"  let g:FuzzyJump_RelativeJumpPrefix = ';;'
+"endif
 
-function! s:RestorePos()
-  call s:SetPos(s:save_pos_cursor)
-  return s:save_pos_cursor
-endfunction
-
-function! s:GetScrollMetrics()
-  call s:SavePos()
-  let met = {}
-  normal! H
-  let met['top'] = line('.')
-  normal! L
-  let met['bottom'] = line('.')
-  call s:RestorePos()
-  return met
-endfunction
-
-function! s:Abs(n)
-  return a:n < 0 ? -1 * a:n : a:n
-endfunction
-
-function! s:NegIfOdd(n)
-  return a:n % 2 == 0 ? -1 * a:n : a:n
-endfunction
-
-function! s:Contains(min, n, max)
-  return a:min <= a:n && a:n <= a:max ? 1 : 0
-endfunction
-
-function! s:Msg(msg)
-  if g:FuzzyJump_Debug
-    call confirm(a:msg, '', '', '')
-  endif
-endfunction
+if !exists('g:FuzzyJump_Debug')
+  let g:FuzzyJump_Debug = 0
+endif
 
 
 
 
-" Core  "{{{2
+" Functions - Core  "{{{1
 
 function! s:FuzzyJumpTo(line, col)
   let M = 10
@@ -157,7 +124,7 @@ endfunction
 
 
 
-" KeyMapper object  "{{{2
+" Functions - KeyMapper  "{{{1
 
 let s:KeyMapper = {
   \ 'maps':{
@@ -185,31 +152,55 @@ endfunction
 
 
 
+" Functions - Utilities  "{{{1
 
+function! s:GetPos()
+  let pos = getpos('.')
+  return {'line':pos[1], 'col':pos[2], 'bufnum':pos[0], 'off':pos[3]}
+endfunction
 
+function! s:SetPos(pos)
+  call setpos('.', [a:pos.bufnum, a:pos.line, a:pos.col, a:pos.off])
+endfunction
 
+function! s:SavePos()
+  let s:save_pos_cursor = s:GetPos()
+  return s:save_pos_cursor
+endfunction
 
-" Variables  "{{{1
+function! s:RestorePos()
+  call s:SetPos(s:save_pos_cursor)
+  return s:save_pos_cursor
+endfunction
 
-if !exists('g:FuzzyJump_AutoStart')
-  let g:FuzzyJump_AutoStart = 1
-endif
+function! s:GetScrollMetrics()
+  call s:SavePos()
+  let met = {}
+  normal! H
+  let met['top'] = line('.')
+  normal! L
+  let met['bottom'] = line('.')
+  call s:RestorePos()
+  return met
+endfunction
 
-if !exists('g:FuzzyJump_AbsoluteJumpPrefix')
-  let g:FuzzyJump_AbsoluteJumpPrefix = ';'
-endif
+function! s:Abs(n)
+  return a:n < 0 ? -1 * a:n : a:n
+endfunction
 
-"if !exists('g:FuzzyJump_RelativeJumpPrefix')
-"  let g:FuzzyJump_RelativeJumpPrefix = ';;'
-"endif
+function! s:NegIfOdd(n)
+  return a:n % 2 == 0 ? -1 * a:n : a:n
+endfunction
 
-if !exists('g:FuzzyJump_Debug')
-  let g:FuzzyJump_Debug = 0
-endif
+function! s:Contains(min, n, max)
+  return a:min <= a:n && a:n <= a:max ? 1 : 0
+endfunction
 
-
-
-
+function! s:Msg(msg)
+  if g:FuzzyJump_Debug
+    call confirm(a:msg, '', '', '')
+  endif
+endfunction
 
 
 
@@ -222,19 +213,11 @@ command! -bar FuzzyJumpDisable call s:KeyMapper.unmap()
 
 
 
-
-
-
-
 " Initialization  "{{{1
 
 if g:FuzzyJump_AutoStart
   FuzzyJumpEnable
 endif
-
-
-
-
 
 
 
