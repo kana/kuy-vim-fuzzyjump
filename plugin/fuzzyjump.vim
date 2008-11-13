@@ -174,8 +174,8 @@ endif
 
 " Commands
 
-command! FuzzyJumpEnable call s:KeyMapper.map()
-command! FuzzyJumpDisable call s:KeyMapper.unmap()
+command! -bar FuzzyJumpEnable call s:KeyMapper.map()
+command! -bar FuzzyJumpDisable call s:KeyMapper.unmap()
 
 if g:FuzzyJump_AutoStart
   FuzzyJumpEnable
