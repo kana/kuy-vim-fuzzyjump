@@ -141,17 +141,17 @@ let s:KeyMapper = {
 
 function! s:KeyMapper.map() dict
   for [key, pos] in items(self.maps)
-    execute printf('nnoremap <silent> %s%s :<C-u>call <SID>FuzzyJumpTo(%s, %s)<CR>',
+    execute printf('noremap <silent> %s%s :<C-u>call <SID>FuzzyJumpTo(%s, %s)<CR>',
         \ g:FuzzyJump_AbsoluteJumpPrefix, key, pos[0], pos[1])
   endfor
-  execute printf('nnoremap <silent> %s <NOP>', g:FuzzyJump_AbsoluteJumpPrefix)
+  execute printf('noremap <silent> %s <NOP>', g:FuzzyJump_AbsoluteJumpPrefix)
 endfunction
 
 function! s:KeyMapper.unmap() dict
   for key in keys(self.maps)
-    execute printf('nunmap %s%s', g:FuzzyJump_AbsoluteJumpPrefix, key)
+    execute printf('unmap %s%s', g:FuzzyJump_AbsoluteJumpPrefix, key)
   endfor
-  execute printf('nunmap %s', g:FuzzyJump_AbsoluteJumpPrefix)
+  execute printf('unmap %s', g:FuzzyJump_AbsoluteJumpPrefix)
 endfunction
 
 " Global options
