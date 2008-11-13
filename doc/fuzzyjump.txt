@@ -144,6 +144,10 @@ BUGS						*fuzzyjump-bugs*
 ==============================================================================
 CHANGELOG					*fuzzyjump-changelog*
 
+0.1.1	2008-11-13T09:36:29+09:00
+	- Fix the following bugs:
+	  - Remove unnecessary variables.
+
 0.1.0	2008-11-11
 	- Initial version.
 

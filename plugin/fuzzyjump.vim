@@ -36,9 +36,9 @@ endfunction
 function! s:GetScrollMetrics()
   call s:SavePos()
   let met = {}
-  execute printf('normal %s', g:FuzzyJump_MoveCursorToScrollTop)
+  normal! H
   let met['top'] = line('.')
-  execute printf('normal %s', g:FuzzyJump_MoveCursorToScrollBottom)
+  normal! L
   let met['bottom'] = line('.')
   call s:RestorePos()
   return met
@@ -167,14 +167,6 @@ endif
 "if !exists('g:FuzzyJump_RelativeJumpPrefix')
 "  let g:FuzzyJump_RelativeJumpPrefix = ';;'
 "endif
-
-if !exists('g:FuzzyJump_MoveCursorToScrollTop')
-  let g:FuzzyJump_MoveCursorToScrollTop = 'H'
-endif
-
-if !exists('g:FuzzyJump_MoveCursorToScrollBottom')
-  let g:FuzzyJump_MoveCursorToScrollBottom = 'L'
-endif
 
 if !exists('g:FuzzyJump_Debug')
   let g:FuzzyJump_Debug = 0
