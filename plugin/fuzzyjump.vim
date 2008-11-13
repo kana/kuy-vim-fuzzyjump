@@ -30,7 +30,11 @@ if exists('loaded_fuzzyjump') || v:version < 701
 endif
 let loaded_fuzzyjump = 1
 
-" Utility functions
+
+
+
+" Functions  "{{{1
+" Utilities  "{{{2
 
 function! s:GetPos()
   let pos = getpos('.')
@@ -80,7 +84,10 @@ function! s:Msg(msg)
   endif
 endfunction
 
-" FuzzyJump Core
+
+
+
+" Core  "{{{2
 
 function! s:FuzzyJumpTo(line, col)
   let M = 10
@@ -147,7 +154,10 @@ function! s:FuzzyJumpTo(line, col)
       \ , tgt.line, tgt.col, line('.'), col('.')))
 endfunction
 
-" KeyMapper object
+
+
+
+" KeyMapper object  "{{{2
 
 let s:KeyMapper = {
   \ 'maps':{
@@ -172,7 +182,14 @@ function! s:KeyMapper.unmap() dict
   execute printf('unmap %s', g:FuzzyJump_AbsoluteJumpPrefix)
 endfunction
 
-" Global options
+
+
+
+
+
+
+
+" Variables  "{{{1
 
 if !exists('g:FuzzyJump_AutoStart')
   let g:FuzzyJump_AutoStart = 1
@@ -190,13 +207,37 @@ if !exists('g:FuzzyJump_Debug')
   let g:FuzzyJump_Debug = 0
 endif
 
-" Commands
+
+
+
+
+
+
+
+" Commands  "{{{1
 
 command! -bar FuzzyJumpEnable call s:KeyMapper.map()
 command! -bar FuzzyJumpDisable call s:KeyMapper.unmap()
+
+
+
+
+
+
+
+
+" Initialization  "{{{1
 
 if g:FuzzyJump_AutoStart
   FuzzyJumpEnable
 endif
 
-" vim: set fdm=marker:
+
+
+
+
+
+
+
+" __END__  "{{{1
+" vim: foldmethod=marker
