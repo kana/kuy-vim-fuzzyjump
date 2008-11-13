@@ -178,7 +178,7 @@ command! FuzzyJumpEnable call s:KeyMapper.map()
 command! FuzzyJumpDisable call s:KeyMapper.unmap()
 
 if g:FuzzyJump_AutoStart
-  call s:KeyMapper.map()
+  FuzzyJumpEnable
 endif
 
 " vim: set fdm=marker:
