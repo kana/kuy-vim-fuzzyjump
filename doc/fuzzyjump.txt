@@ -1,0 +1,154 @@
+*fuzzyjump.txt*	Jump to where you (almost) want
+
+Version 0.1.1
+Originally written by:
+	Copyright (C) 2008 Yuki KODAMA <http://blog.endflow.net/>
+Modified and the document written by:
+	Copyright (C) 2008 kana <http://whileimautomaton.net/>
+License: MIT license  {{{
+    Permission is hereby granted, free of charge, to any person obtaining
+    a copy of this software and associated documentation files (the
+    "Software"), to deal in the Software without restriction, including
+    without limitation the rights to use, copy, modify, merge, publish,
+    distribute, sublicense, and/or sell copies of the Software, and to
+    permit persons to whom the Software is furnished to do so, subject to
+    the following conditions:
+
+    The above copyright notice and this permission notice shall be included
+    in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+    OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+    CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+    TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+}}}
+
+CONTENTS					*fuzzyjump-contents*
+
+Introduction		|fuzzyjump-introduction|
+Interface		|fuzzyjump-interface|
+  Commands		  |fuzzyjump-commands|
+  Functions		  |fuzzyjump-functions|
+  Mappings		  |fuzzyjump-mappings|
+Bugs			|fuzzyjump-bugs|
+Changelog		|fuzzyjump-changelog|
+
+
+
+
+==============================================================================
+INTRODUCTION					*fuzzyjump-introduction*
+
+*fuzzyjump* is a Vim plugin to jump the cursor where you want like a pointing
+device such as a mouse.  This plugin maps most of keys on a keyboard to
+relative positions in the current buffer.  For example. if your screen looks
+like:
+
+	+-----------------------------------------------------+
+	|if where git &>/dev/null; then                       |
+	|  function prompt-git-head-name() {                  |
+	|    if ! [ -d .git ]; then                           |
+	|      return 1                                       |
+	|    fi                                               |
+	|    local head_name                                  |
+	|    head_name="$(git branch | sed -e 's/^\* //;t;d')"|
+	|"foo.sh" [New file]                                  |
+	+-----------------------------------------------------+
+
+then the correspondences of keys and positions are as follow (where {X} means
+that key "X" is corresponding to the position where it is written).
+
+	+-----------------------------------------------------+
+	|{1}wh{2} g{3}&>{4}v/{5}l;{6}en{7}  {8}  {9}  {0}  {-}|
+	|  function prompt-git-head-name() {                  |
+	|{q} i{w} [{e} .{r} ]{t}he{y}  {u}  {i}  {o}  {p}  {@}|
+	|      return 1                                       |
+        |{a} f{s}  {d}  {f}  {g}  {h}  {j}  {k}  {l}  {;}  {:}|
+	|    local head_name                                  |
+	|{z} h{x}_n{c}="{v}it{b}an{n}| {m} -{,}s/{.} /{/};d{\}|
+	|"foo.sh" [New file]                                  |
+	+-----------------------------------------------------+
+
+By default, this plugin defined 2-stroke key mappings to jump to one of the
+above positions.  The key mappings consist of the common prefix ";" and one of
+the above keys.  For example, if you type ";1", the cursor will move to the
+position near {1} in the above figure.  For some keys such as {9}, there is no
+text and it's not possible to move the cursor to the position, if so, this
+plugin moves the cursor to one of the most useful positions near the specified
+position.
+
+Note that the original author doesn't consider about keyboard layouts other
+than JIS layout.  So the above figure and the default key mappings are
+somewhat strange for non-Japanese users.
+http://en.wikipedia.org/wiki/Image:KB_Japanese.svg
+
+
+
+
+Requirements:
+- Vim 7.1 or later
+
+
+
+
+==============================================================================
+INTERFACE					*fuzzyjump-interface*
+
+------------------------------------------------------------------------------
+COMMANDS					*fuzzyjump-commands*
+
+:FuzzyJumpEnable				*:FuzzyJumpEnable*
+			Enables |fuzzyjump|.
+
+:FuzzyJumpDisable				*:FuzzyJumpDisable*
+			Disables |fuzzyjump|.
+
+
+------------------------------------------------------------------------------
+MAPPINGS					*fuzzyjump-mappings*
+
+See the figures in |fuzzyjump-introduction|.
+
+
+------------------------------------------------------------------------------
+VARIABLES					*fuzzyjump-variables*
+
+						*g:FuzzyJump_AutoStart*
+g:FuzzyJump_AutoStart				number (default: 1)
+	If this value is true, |:FuzzyJumpEnable| will be automatically
+	executed when this plugin is loaded.  Otherwise, does nothing.
+
+					      *g:FuzzyJump_AbsoluteJumpPrefix*
+g:FuzzyJump_AbsoluteJumpPrefix			string (default: ";")
+	The prefix key sequence to jump the cursor.  See also
+	|fuzzyjump-introduction|.
+
+
+
+
+==============================================================================
+BUGS						*fuzzyjump-bugs*
+
+- This plugin doesn't provide way to customize key mappings in Vim's style.
+
+- This plugin doesn't consider about keyboard layouts other than JIS one.
+
+- There are many bugs around the world.
+
+
+
+
+==============================================================================
+CHANGELOG					*fuzzyjump-changelog*
+
+0.1.0	2008-11-11
+	- Initial version.
+
+
+
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:fen:fdl=0:fdm=marker:
