@@ -147,6 +147,10 @@ CHANGELOG					*fuzzyjump-changelog*
 0.1.1	2008-11-13T09:36:29+09:00
 	- Fix the following bugs:
 	  - Remove unnecessary variables.
+	  - Fix key mappings to move the cursor which didn't properly work
+	    if [count] is given.
+	  - Fix key mappings to move the cursor which weren't also defined in
+	    Visual mode and Operator-pending mode.
 
 0.1.0	2008-11-11
 	- Initial version.

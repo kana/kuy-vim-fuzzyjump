@@ -141,7 +141,7 @@ let s:KeyMapper = {
 
 function! s:KeyMapper.map() dict
   for [key, pos] in items(self.maps)
-    execute printf('nnoremap <silent> %s%s :call <SID>FuzzyJumpTo(%s, %s)<CR>',
+    execute printf('nnoremap <silent> %s%s :<C-u>call <SID>FuzzyJumpTo(%s, %s)<CR>',
         \ g:FuzzyJump_AbsoluteJumpPrefix, key, pos[0], pos[1])
   endfor
   execute printf('nnoremap <silent> %s <NOP>', g:FuzzyJump_AbsoluteJumpPrefix)
