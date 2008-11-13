@@ -35,14 +35,6 @@ let loaded_fuzzyjump = 1
 
 " Variables  "{{{1
 
-if !exists('g:FuzzyJump_AutoStart')
-  let g:FuzzyJump_AutoStart = 1
-endif
-
-if !exists('g:FuzzyJump_AbsoluteJumpPrefix')
-  let g:FuzzyJump_AbsoluteJumpPrefix = ';'
-endif
-
 "if !exists('g:FuzzyJump_RelativeJumpPrefix')
 "  let g:FuzzyJump_RelativeJumpPrefix = ';;'
 "endif
@@ -136,17 +128,10 @@ let s:KeyMapper = {
 
 function! s:KeyMapper.map() dict
   for [key, pos] in items(self.maps)
-    execute printf('noremap <silent> %s%s :<C-u>call <SID>FuzzyJumpTo(%s, %s)<CR>',
-        \ g:FuzzyJump_AbsoluteJumpPrefix, key, pos[0], pos[1])
+    execute printf('noremap <silent> <Plug>(fuzzyjump-prefix)%s :<C-u>call <SID>FuzzyJumpTo(%s, %s)<CR>',
+        \ key, pos[0], pos[1])
   endfor
-  execute printf('noremap <silent> %s <NOP>', g:FuzzyJump_AbsoluteJumpPrefix)
-endfunction
-
-function! s:KeyMapper.unmap() dict
-  for key in keys(self.maps)
-    execute printf('unmap %s%s', g:FuzzyJump_AbsoluteJumpPrefix, key)
-  endfor
-  execute printf('unmap %s', g:FuzzyJump_AbsoluteJumpPrefix)
+  execute printf('noremap <silent> <Plug>(fuzzyjump-prefix) <Nop>')
 endfunction
 
 
@@ -205,18 +190,14 @@ endfunction
 
 
 
-" Commands  "{{{1
-
-command! -bar FuzzyJumpEnable call s:KeyMapper.map()
-command! -bar FuzzyJumpDisable call s:KeyMapper.unmap()
-
-
-
-
 " Initialization  "{{{1
 
-if g:FuzzyJump_AutoStart
-  FuzzyJumpEnable
+call s:KeyMapper.map()
+
+if !(hasmapto('<Plug>(fuzzyjump-prefix)', 'n')
+\    || hasmapto('<Plug>(fuzzyjump-prefix)', 'v')
+\    || hasmapto('<Plug>(fuzzyjump-prefix)', 'o'))
+  map ;  <Plug>(fuzzyjump-prefix)
 endif
 
 

@@ -30,8 +30,6 @@ CONTENTS					*fuzzyjump-contents*
 
 Introduction		|fuzzyjump-introduction|
 Interface		|fuzzyjump-interface|
-  Commands		  |fuzzyjump-commands|
-  Functions		  |fuzzyjump-functions|
   Mappings		  |fuzzyjump-mappings|
 Bugs			|fuzzyjump-bugs|
 Changelog		|fuzzyjump-changelog|
@@ -73,7 +71,8 @@ that key "X" is corresponding to the position where it is written).
 	+-----------------------------------------------------+
 
 By default, this plugin defined 2-stroke key mappings to jump to one of the
-above positions.  The key mappings consist of the common prefix ";" and one of
+above positions.  The key mappings consist of the common prefix ";" (which can
+be customized to any key sequence; see |<Plug>(fuzzyjump-prefix)|) and one of
 the above keys.  For example, if you type ";1", the cursor will move to the
 position near {1} in the above figure.  For some keys such as {9}, there is no
 text and it's not possible to move the cursor to the position, if so, this
@@ -98,41 +97,32 @@ Requirements:
 INTERFACE					*fuzzyjump-interface*
 
 ------------------------------------------------------------------------------
-COMMANDS					*fuzzyjump-commands*
-
-:FuzzyJumpEnable				*:FuzzyJumpEnable*
-			Enables |fuzzyjump|.
-
-:FuzzyJumpDisable				*:FuzzyJumpDisable*
-			Disables |fuzzyjump|.
-
-
-------------------------------------------------------------------------------
 MAPPINGS					*fuzzyjump-mappings*
 
-See the figures in |fuzzyjump-introduction|.
+See also the figures in |fuzzyjump-introduction|.
 
+<Plug>(fuzzyjump-prefix)			*<Plug>(fuzzyjump-prefix)*
+			The pseudo key sequence which is used as the prefix
+			for key mappings to jump the cursor.
 
-------------------------------------------------------------------------------
-VARIABLES					*fuzzyjump-variables*
+			By default, ";" is mapped to this key sequence if ";"
+			is not mapped to anything and
+			|<Plug>(fuzzyjump-prefix)| is not mapped from anything
+			in one of Normal mode, Visual mode and
+			Operator-pending mode.
 
-						*g:FuzzyJump_AutoStart*
-g:FuzzyJump_AutoStart				number (default: 1)
-	If this value is true, |:FuzzyJumpEnable| will be automatically
-	executed when this plugin is loaded.  Otherwise, does nothing.
-
-					      *g:FuzzyJump_AbsoluteJumpPrefix*
-g:FuzzyJump_AbsoluteJumpPrefix			string (default: ";")
-	The prefix key sequence to jump the cursor.  See also
-	|fuzzyjump-introduction|.
+			To customize the prefix, write the following settings
+			in your |vimrc|:
+>
+				" Use <Space>{X} to fuzzyjump.
+				map <Space>  <Plug>(fuzzyjump-prefix)
+<
 
 
 
 
 ==============================================================================
 BUGS						*fuzzyjump-bugs*
-
-- This plugin doesn't provide way to customize key mappings in Vim's style.
 
 - This plugin doesn't consider about keyboard layouts other than JIS one.
 
@@ -145,6 +135,8 @@ BUGS						*fuzzyjump-bugs*
 CHANGELOG					*fuzzyjump-changelog*
 
 0.1.1	2008-11-13T09:36:29+09:00
+	- Add |<Plug>(fuzzyjump-prefix)| to customize and remove other stuffs
+	  to customize.
 	- Fix the following bugs:
 	  - Remove unnecessary variables.
 	  - Fix key mappings to move the cursor which didn't properly work
